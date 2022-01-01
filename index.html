@@ -7,11 +7,12 @@
   <link rel="icon" href="./img/favicon.png">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/home.css">
+  <script src="./js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="home">
   <section class="head_div" id="home">
-    <video src="./img/V3.mp4" style="width: 100%; height: 100%;object-fit: cover;position: absolute;left: 0;top:0;background-color: black;" autoplay="autoplay" loop="loop" muted="muted"></video>
+    <video id="video" style="width: 100%; height: 100%;object-fit: cover;position: absolute;left: 0;top:0;background-color: black;" autoplay="autoplay" muted="muted"></video>
       <div style="width: 100%; height: 100%;background: rgba(0,0,0,0.5);position: absolute;left: 0;top:0"></div>
       <div class="head_position" id="tab_menu">
         <div class="head_tab wrapper">
@@ -272,7 +273,7 @@
         <div class="news_item">
           <img src="./img/art1.png" alt=""/>
           <h2>Social Protocol for Web3</h2>
-          <p>The internet is currently an oligopoly, where social media giants make huge profits by monopolizing users’ social identities and data. They can also change the rules of the game...</p>
+          <p>The internet is currently an oligopoly, where social media giants make huge profits by monopolizing users’ social identities and data. They can also change the rules of the game whenever they want, which negates the original spirit of...</p>
           <div>
             <a style="color:#333333" href="https://www.coindesk.com/sponsored-content/follow-a-new-social-protocol-for-web-30/" target="_blank">Read more</a>
             <img src="" alt=""/>
@@ -281,7 +282,7 @@
         <div class="news_item">
           <img src="./img/art2.png" alt=""/>
           <h2>Web3.0 Will Nuke Social </h2>
-          <p>I’m going to be blunt. Social media companies are pixel cockroaches. They crawl around the dark to collect things they don’t own. They follow you around. And the moment you...</p>
+          <p>I’m going to be blunt. Social media companies are pixel cockroaches. They crawl around the dark to collect things they don’t own. They follow you around. And the moment you think you finally got rid of them ...</p>
           <div>
             <a style="color:#333333" href="https://medium.com/technology-hits/web-3-0-will-nuke-social-media-as-we-know-it-ae246548256b" target="_blank">Read more</a>
             <img src="" alt=""/>
@@ -411,6 +412,19 @@
             }
          }
       }
-   })
+   });
+   $(function(){
+      var len = 6;
+      var curr = 0;
+      $('#video').on('ended',videoPlay);
+      videoPlay();
+      function videoPlay(){
+        for(var i=0;i<len;i++){
+          if(i==curr)$('#video').attr("src","./img/V"+(i+1)+".mp4");
+        }
+        curr++;
+        if(curr>=len)curr=0;
+      }
+   });
 </script>
 </html>
