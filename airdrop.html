@@ -391,9 +391,14 @@
     hello.init({twitter:appkey},{redirect_uri:'https://api.coo.so/oauth'});
 
     function receiveMsg(e) {
-      console.log("nMessage: " + e.data);
-      let data = JSON.parse(e.data);
-      twitterLogined(data.code,data.msg,data.data);
+      try{
+        let data = JSON.parse(e.data);
+        if(data.key=="coo_login_msg"){
+          console.log("nMessage: " + e.data);
+          twitterLogined(data.code,data.msg,data.data);
+        }
+      }catch(e){
+      }
     }
 
     if(window.addEventListener) {
