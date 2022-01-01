@@ -119,16 +119,16 @@
                   <span>Followers</span>
                 </div>
                 <div>
-                  <p id="followers_count">-</p>
+                  <span id="followers_count">-</span>
                 </div>
                 <div>
-                  <p>50000</p>
+                  <span>50000</span>
                 </div>
                 <div>
-                  <p>67.5</p>
+                  <span>67.5</span>
                 </div>
                 <div>
-                  <p id="followers_count_r">-</p>
+                  <span id="followers_count_r">-</span>
                 </div>
               </div>    
             </div>
@@ -138,16 +138,16 @@
                   <span>Tweet</span>
                 </div>
                 <div>
-                  <p id="tweet_count">-</p>
+                  <span id="tweet_count">-</span>
                 </div>
                 <div>
-                  <p>200</p>
+                  <span>200</span>
                 </div>
                 <div>
-                  <p>7500</p>
+                  <span>750</span>
                 </div>
                 <div>
-                  <p id="tweet_count_r">-</p>
+                  <span id="tweet_count_r">-</span>
                 </div>
               </div>
             </div>
@@ -161,16 +161,16 @@
                   <span>Following</span>
                 </div>
                 <div>
-                  <p id="following_count">-</p>
+                  <span id="following_count">-</span>
                 </div>
                 <div>
-                  <p>1000</p>
+                  <span>1000</span>
                 </div>
                 <div>
-                  <p>150</p>
+                  <span>150</span>
                 </div>
                 <div>
-                  <p id="following_count_r">-</p>
+                  <span id="following_count_r">-</span>
                 </div>
               </div>
             </div>
@@ -181,16 +181,16 @@
                   <span>Retweet COO</span>
                 </div>
                 <div>
-                  <p id="isRetween">-</p>
+                  <span id="isRetween">-</span>
                 </div>
                 <div>
-                  <p>1</p>
+                  <span>1</span>
                 </div>
                 <div>
-                  <p>37500</p>
+                  <span>37500</span>
                 </div>
                 <div>
-                  <p id="isRetween_r">-</p>
+                  <span id="isRetween_r">-</span>
                 </div>
               </div>
             </div>
@@ -200,16 +200,16 @@
                   <span>Follow COO</span>
                 </div>
                 <div>
-                  <p id="isFollow">-</p>
+                  <span id="isFollow">-</span>
                 </div>
                 <div>
-                  <p>1</p>
+                  <span>1</span>
                 </div>
                 <div>
-                  <p>37500</p>
+                  <span>37500</span>
                 </div>
                 <div>
-                  <p id="isFollow_r">-</p>
+                  <span id="isFollow_r">-</span>
                 </div>
               </div>  
             </div>
@@ -221,7 +221,7 @@
             </div>
             <div>
               <span id="total_amount"></span>
-              <div class="btn_div deposit_btn" style="margin-left:10px" onclick="claim()">Claim</div>
+              <div class="btn_div deposit_btn" style="margin-left:10px" onclick="onclaim()">Claim</div>
             </div>
           </div>
         </div>
@@ -423,14 +423,14 @@
       $("#isFollow").html("Finish");
       $("#isFollow_r").html(data.isFollow);
     }else{
-      $("#isFollow").html("<a href='"+twitter_follow_url+"' target='_blank'>To follow</a>");
+      $("#isFollow").html("<a href='"+twitter_follow_url+"' style='color:#5489FF' target='_blank'>To follow</a>");
       $("#isFollow_r").html(data.isFollow);
     }
     if(data.isRetween>0){
       $("#isRetween").html("Finish");
       $("#isRetween_r").html(data.isRetween);
     }else{
-      $("#isRetween").html("<a href='"+twitter_retween_url+"' target='_blank'>To retween</a>");
+      $("#isRetween").html("<a href='"+twitter_retween_url+"' style='color:#5489FF' target='_blank'>To retween</a>");
       $("#isRetween_r").html(data.isRetween);
     }
     $("#followers_count").html(data.followers_count);
@@ -480,7 +480,7 @@
       hello('twitter').login();
    }
 
-   async function claim(){
+   async function onclaim(){
     let res = await fetch("https://api.coo.so/claim?user_id="+user_id);
     let result = await res.json();
     if(result.r){
