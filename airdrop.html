@@ -481,22 +481,28 @@
    }
 
    async function onclaim(){
-    let res = await fetch("https://api.coo.so/claim?user_id="+user_id);
-    let result = await res.json();
-    if(result.r){
-      let amount = BigNumber(result.amount).multipliedBy(1000000000000000000).toFixed(0);
-      let c = new web3js.eth.Contract(contract_abi,contract);
-      await c.methods.claim(result.user_id,amount,result.r,result.s,result.v).call();
+    if(user_id && user_id!=undefined){
+      let res = await fetch("https://api.coo.so/claim?user_id="+user_id);
+      let result = await res.json();
+      if(result.r){
+        let amount = BigNumber(result.amount).multipliedBy(1000000000000000000).toFixed(0);
+        let c = new web3js.eth.Contract(contract_abi,contract);
+        await c.methods.claim(result.user_id,amount,result.r,result.s,result.v).send({from:account});
+      }else{
+        alert("Error");
+      }
     }else{
-      alert("Error");
+      alert("Please connect twitter");
     }
    }
 
    async function refreshData(){
-     if(user_id){
+     if(user_id && user_id!=undefined){
       let res = await fetch("https://api.coo.so/info?user_id="+user_id);
       let result = await res.json();
       updateData(result);
+     }else{
+       alert("Please connect twitter");
      }
    }
 </script>
