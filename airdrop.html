@@ -222,6 +222,7 @@
             <div>
               <span id="total_amount"></span>
               <div class="btn_div deposit_btn" style="margin-left:10px" onclick="onclaim()">Claim</div>
+              <div class="btn_div deposit_btn" style="margin-left:10px" onclick="addcoin()">Add $COO</div>
             </div>
           </div>
         </div>
@@ -504,6 +505,20 @@
      }else{
        alert("Please connect twitter");
      }
+   }
+
+   async function addcoin(){
+    window.ethereum.request({method:"wallet_watchAsset",
+        params:{
+           type:"ERC20",
+           options:{
+              address:"0x5628d47c26F2F7cc21443614188aD4aA2CC3B4e5",
+              symbol:"COO",
+              decimals:18,
+              image:"https://coo.so/img/logo.png",
+           }
+        }
+     });
    }
 </script>
 </html>
