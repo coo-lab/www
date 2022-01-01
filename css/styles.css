@@ -1,14 +1,9 @@
-@font-face {
-    font-family: HelveticaNeue;
-    src: url("../fonts/HelveticaNeue.ttc");
-}
-
 body {
     width: 100%;
     height: 100%;
     margin: 0;
     color: #333333;
-    font-family: HelveticaNeue;
+    font-family: -apple-system,BlinkMacSystemFont,Catamaran,sans-serif;
     background-color: #FFFFFF;
 
 }
@@ -411,6 +406,8 @@ a {
         margin: 0 auto;
         padding-left: 15px;
         padding-right: 15px;
+        padding-top: 7px;
+        padding-bottom: 7px;
     }
     .row_column {
         display: flex;
@@ -453,6 +450,7 @@ a {
     .subtitle_div p {
         font-size: 18px;
         line-height: 27px;
+        padding-bottom: 35px;
     }
 
     .claim_div {
@@ -484,9 +482,9 @@ a {
     }
 
     .btn_div {
-        width: 100px;
-        height: 35px;
-        line-height: 35px;
+        width: 140px;
+        height: 40px;
+        line-height: 37px;
         border-radius: 18px;
         font-size: 14px;
     }
@@ -702,7 +700,7 @@ a {
     }
 
     .heading_div h2 {
-        font-size: 38px;
+        font-size: 54px;
     }
     .heading_div div {
         width: 46px;
