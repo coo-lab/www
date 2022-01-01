@@ -12,7 +12,7 @@
 <body>
 <div class="home">
   <section class="head_div" id="home">
-    <video id="video" style="width: 100%; height: 100%;object-fit: cover;position: absolute;left: 0;top:0;background-color: black;" autoplay="autoplay" muted="muted"></video>
+    <video poster="./img/video.jpg" src="./img/video.mov" style="width: 100%; height: 100%;object-fit: cover;position: absolute;left: 0;top:0;background-color: black;" autoplay="autoplay" loop="loop" muted="muted" custom-cache="false"></video>
       <div style="width: 100%; height: 100%;background: rgba(0,0,0,0.5);position: absolute;left: 0;top:0"></div>
       <div class="head_position" id="tab_menu">
         <div class="head_tab wrapper">
@@ -411,19 +411,6 @@
                mya.classList.add("tab_menu_white");
             }
          }
-      }
-   });
-   $(function(){
-      var len = 6;
-      var curr = 0;
-      $('#video').on('ended',videoPlay);
-      videoPlay();
-      function videoPlay(){
-        for(var i=0;i<len;i++){
-          if(i==curr)$('#video').attr("src","./img/V"+(i+1)+".mp4");
-        }
-        curr++;
-        if(curr>=len)curr=0;
       }
    });
 </script>
