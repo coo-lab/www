@@ -369,6 +369,7 @@
   var contract="0x5628d47c26F2F7cc21443614188aD4aA2CC3B4e5";
   var appkey = "9tmPMiyhIMZZCMBaw5fn1qD7X";
   var user_id;
+  var uprice = 0;
   window.addEventListener('scroll',function(){
     let head = document.querySelector('.head_position');
     let  alist = document.getElementsByClassName( "tab_menu" );
@@ -447,7 +448,12 @@
     $("#following_count_r").html(data.following_count_r);
     $("#tweet_count").html(data.tweet_count);
     $("#tweet_count_r").html(data.tweet_count_r);
-    $("#total_amount").html(data.amount);
+    if(uprice!=0){
+      $("#total_amount").html(data.amount+"($"+(BigNumber(uprice).multipliedBy(data.amount).toFixed(0))+")");
+    }else{
+      $("#total_amount").html(data.amount);
+    }
+    
     $("#rate").html(BigNumber(data.rate).toFixed(2));
 
     if(data.reg_allow!=1){
@@ -477,7 +483,8 @@
         }else{
           account = ac;
           $("#walletbtn").html(account.substr(0,5)+"..."+account.substr(account.length-5));
-        }          
+        }      
+        uprice = await this.cooUSDPrice();
       }
    }
    function connectTwitter(){
@@ -527,5 +534,51 @@
         }
      });
    }
+
+
+
+  let pair_abi = [{"constant":true,"inputs":[],"name":"getReserves","outputs":[{"internalType":"uint112","name":"_reserve0","type":"uint112"},{"internalType":"uint112","name":"_reserve1","type":"uint112"},{"internalType":"uint32","name":"_blockTimestampLast","type":"uint32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"token1","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}];
+	let chainlink_oralce_abi = [{"inputs":[],"name":"latestAnswer","outputs":[{"internalType":"int256","name":"","type":"int256"}],"stateMutability":"view","type":"function"}];
+	let oracle_address = "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419";
+	let coo_eth_lp_addr = "0x3e5cda8ceac846d24a9a6c78f7ca68c1ecf68a51";
+	let coo_address="0x5628d47c26F2F7cc21443614188aD4aA2CC3B4e5";
+		
+	async function cooEthPrice() {
+        const lpContract = new web3js.eth.Contract(pair_abi, coo_eth_lp_addr);
+        let reserves = await lpContract.methods.getReserves().call();
+        let cooPrice;
+        if(reserves) {
+            let reserve0 = new BigNumber(reserves[0]);
+            let reserve1 = new BigNumber(reserves[1]);
+            if(reserve0.isGreaterThan(0) && reserve1.isGreaterThan(0)){
+                let token0 = await lpContract.methods.token0().call();
+                let token1 = await lpContract.methods.token1().call();
+                if(token0 && token0 == coo_address) {
+                    cooPrice = reserve1.dividedBy(reserve0);
+                }
+                if(token1 && token1 == coo_address) {
+                    cooPrice = reserve0.dividedBy(reserve1);
+                }
+            }
+        }
+        return cooPrice;
+    }
+
+    async function getETHUSDPriceByChainlink(){
+        let price = 0;
+        const oracleContract = new web3js.eth.Contract(chainlink_oralce_abi, oracle_address);
+        let result = await oracleContract.methods.latestAnswer().call();
+        if(result && result > 0){
+            let pow_decimals = new BigNumber(10).exponentiatedBy(new BigNumber(8));
+            price = new BigNumber(result).dividedBy(pow_decimals);
+        }
+        return price;
+    }
+
+    async function cooUSDPrice() {
+        let cooEth = await this.cooEthPrice();
+        let ethUsd = await this.getETHUSDPriceByChainlink();
+		    return new BigNumber(cooEth).multipliedBy(ethUsd);
+    }
 </script>
 </html>
