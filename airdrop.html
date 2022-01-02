@@ -17,7 +17,7 @@
     <div class="head_position" id="tab_menu">
       <div class="head_tab wrapper" >
         <div class="tab_left">
-          <img id="tab_logo" src="./img/logo_white.png" alt=""/>
+          <img id="tab_logo" src="./img/logo_white.png" alt="" style="cursor: pointer;" onclick="window.location='https://coo.so'"/>
         </div>
         <div class="tab_right">
           <div class="tab_div">
@@ -502,6 +502,10 @@
    }
 
    async function onclaim(){
+    if(!BigNumber(result.amount).isGreaterThan(0)){
+      alert("Your airdrop is 0 ");
+      return;
+    }
     if(user_id && user_id!=undefined){
       let res = await fetch("https://api.coo.so/claim?user_id="+user_id);
       let result = await res.json();
