@@ -469,10 +469,14 @@
     if (window.ethereum) {
         window.ethereum.on('accountsChanged',function(accounts){(account!=accounts)?location.reload():''});
         window.ethereum.on('networkChanged',async function(chainId){(chainId!="1")?(await ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x1'}]})):location.reload()});
-        let cid = await new Web3(window.ethereum).eth.net.getId() + "";
-        if (cid != "1") {
-            await ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x1'}]});
-            return;
+        try{
+          let cid = await new Web3(window.ethereum).eth.net.getId() + "";
+          if (cid != "1") {
+              await ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x1'}]});
+              return;
+          }
+        }catch(e){
+
         }
         let accounts = await window.ethereum.request({method:'eth_requestAccounts'});
         web3js = new Web3(window.ethereum);
