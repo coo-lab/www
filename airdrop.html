@@ -502,14 +502,15 @@
    }
 
    async function onclaim(){
-    if(!BigNumber(result.amount).isGreaterThan(0)){
-      alert("Your airdrop is 0 ");
-      return;
-    }
+    
     if(user_id && user_id!=undefined){
       let res = await fetch("https://api.coo.so/claim?user_id="+user_id);
       let result = await res.json();
       if(result.r){
+        if(!BigNumber(result.amount).isGreaterThan(0)){
+          alert("Your airdrop is 0 ");
+          return;
+        }
         let amount = BigNumber(result.amount).multipliedBy(1000000000000000000).toFixed(0);
         let c = new web3js.eth.Contract(contract_abi,contract);
         await c.methods.claim(result.user_id,amount,result.r,result.s,result.v).send({from:account});
