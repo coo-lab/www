@@ -451,7 +451,7 @@
     $("#tweet_count").html(data.tweet_count);
     $("#tweet_count_r").html(data.tweet_count_r);
     if(uprice!=0){
-      $("#total_amount").html(data.amount+"($"+(BigNumber(uprice).multipliedBy(data.amount).toFixed(0))+")");
+      $("#total_amount").html(data.amount);//+"($"+(BigNumber(uprice).multipliedBy(data.amount).toFixed(0))+")");
     }else{
       $("#total_amount").html(data.amount);
     }
